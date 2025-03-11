@@ -1,0 +1,93 @@
+Enter password: **************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 46
+Server version: 8.0.41 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE Job7;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> USE Job7;
+Database changed
+mysql> CREATE TABLE employe (
+    -> id INT PRIMARY KEY AUTO_INCREMENT,
+    -> nom VARCHAR(255),
+    -> prenom VARCHAR(255),
+    -> salaire DECIMAL(10,2),
+    -> id_service INT
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> SHOW TABLES;
++----------------+
+| Tables_in_job7 |
++----------------+
+| employe        |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> CREATE TABLE service (
+    -> id INT PRIMARY KEY AUTO_INCREMENT,
+    -> nom VARCHAR(255)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO service (nom) VALUES ('service1'), ('service2'), ('service3');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO employe (nom, prenom, salaire, id_service) VALUES
+    -> ('Dupont', 'Jean', 3500.00, 1),
+    -> ('Martin', 'Sophie', 2800.00, 2),
+    -> ('Durand', 'Paul', 4000.00, 1),
+    -> ('Lemoine', 'Claire', 3200.00, 3);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM employer
+    -> ;
+ERROR 1146 (42S02): Table 'job7.employer' doesn't exist
+mysql> SELECT * FROM employe;
++----+---------+--------+---------+------------+
+| id | nom     | prenom | salaire | id_service |
++----+---------+--------+---------+------------+
+|  1 | Dupont  | Jean   | 3500.00 |          1 |
+|  2 | Martin  | Sophie | 2800.00 |          2 |
+|  3 | Durand  | Paul   | 4000.00 |          1 |
+|  4 | Lemoine | Claire | 3200.00 |          3 |
++----+---------+--------+---------+------------+
+4 rows in set (0.00 sec)
+
+
+
+mysql> SELECT * FROM employe WHERE salaire > 3000;
++----+----------+--------+---------+------------+
+| id | nom      | prenom | salaire | id_service |
++----+----------+--------+---------+------------+
+|  1 | Dupont   | Jean   | 3500.00 |          1 |
+|  4 | Lemoine  | Claire | 3200.00 |          3 |
++----+----------+--------+---------+------------+
+2 rows in set (0.01 sec)
+
+
+mysql> SELECT employe.nom, employe.prenom, employe.salaire, service.nom AS service
+    -> FROM employe
+    -> JOIN service ON employe.id_service = service.id;
++----------+--------+---------+----------+
+| nom      | prenom | salaire | service  |
++----------+--------+---------+----------+
+| Dupont   | jean   | 3500.00 | service1 |
+| Martin   | Sophie | 2800.00 | service2 |
+| Durand   | Paul   | 3000.00 | service1 |
+| Lemoine  | Claire | 3200.00 | service3 |
++----------+--------+---------+----------+
+4 rows in set (0.00 sec)
+
+mysql>
